@@ -4,18 +4,16 @@ public class FinalChallenge {
     
 }
 
-
 abstract class ListItem {
 
     protected ListItem rightLink;
     protected ListItem leftLink;
     protected Object value;
 
-    // Constructor.
     public ListItem(Object value) {
         this.value = value;
     }
-    // Getters and Setters.
+
     public Object getValue() {
         return value;
     }
@@ -23,12 +21,11 @@ abstract class ListItem {
         this.value = value;
     }
 
-    // Abstract methods.
-    public abstract ListItem next();
-    public abstract ListItem setNext(ListItem rightLink);
-    public abstract ListItem previous();
-    public abstract ListItem setPrevious(ListItem leftLink);
-    public abstract int compareTo(ListItem item);
+    abstract ListItem next();
+    abstract ListItem setNext(ListItem rightLink);
+    abstract ListItem previous();
+    abstract ListItem setPrevious(ListItem leftLink);
+    abstract int compareTo(ListItem item);
 }
 
 class Node extends ListItem {
@@ -42,7 +39,7 @@ class Node extends ListItem {
         return rightLink;
     }
     @Override 
-    public ListItem setNext(ListItem rightLink) {
+    public ListItem setNext(ListItem rightLink){
         this.rightLink = rightLink;
         return rightLink;
     }
@@ -58,10 +55,10 @@ class Node extends ListItem {
     @Override 
     public int compareTo(ListItem item) {
 
-        if((int) value > (int) item.value){
+        if((int) value > (int) item.value) {
             return 1;
         }
-        else if( (int) value < (int) item.value) {
+        else if ((int) value < (int) item.value) {
             return -1;
         }
         return 0;
@@ -78,7 +75,7 @@ interface NodeList {
 
 class MyLinkedList implements NodeList {
 
-    private ListItem root;
+    protected ListItem root;
 
     public MyLinkedList(ListItem root) {
         this.root = root;
@@ -91,7 +88,7 @@ class MyLinkedList implements NodeList {
     @Override 
     public boolean addItem(ListItem item) {
 
-        if(item == null) {
+        if(item == null){
             return false;
         }
         if(root == null){
@@ -107,17 +104,16 @@ class MyLinkedList implements NodeList {
             return true;
         }
 
-        ListItem current  = root;
+        ListItem current = root;
 
         while(current != null) {
             int comparison = item.compareTo(current);
 
-            if(comparison == 0){
+            if(comparison == 0) {
                 return false;
             }
             if(comparison > 0) {
-                if(current.next() == null){
-
+                if(current.next() == null) {
                     current.setNext(item);
                     item.setPrevious(current);
                     return true;
@@ -136,24 +132,25 @@ class MyLinkedList implements NodeList {
         }
         return false;
     }
+
     @Override 
     public boolean removeItem(ListItem item) {
 
-        if(item == null || root == null) {
+        if(root == null || item == null) {
             return false;
         }
         ListItem current = root;
 
         while(current != null) {
-            int comparison = item.compareTo(current);
 
-            if(comparison == 0){
+            int comparsion = item.compareTo(current);
 
-                //Removing root
-                if(current == root) {
+            if(comparsion == 0) {
+
+                if(root == current) {
                     root = current.next();
 
-                    if(root != null){
+                    if(root != null) {
                         root.setPrevious(null);
                     }
                 }
@@ -168,14 +165,13 @@ class MyLinkedList implements NodeList {
                 }
                 return true;
             }
-            if(comparison < 0){
+            if(comparsion < 0){
                 return false;
             }
             current = current.next();
         }
         return false;
     }
-
     @Override 
     public void traverse(ListItem root) {
 
@@ -184,7 +180,7 @@ class MyLinkedList implements NodeList {
             return ;
         }
         ListItem current = root;
-        while(current != null) {
+        while(current != null){
             System.out.println(current.getValue());
             current = current.next();
         }
